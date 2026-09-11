@@ -1,4 +1,4 @@
-export const VALID_DICE_COUNTS = [1, 2, 4, 6, 8, 10, 12] as const;
+export const VALID_DICE_COUNTS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] as const;
 
 export type DiceCount = (typeof VALID_DICE_COUNTS)[number];
 
@@ -28,12 +28,6 @@ export function validationMessageForCount(value: number): string | null {
   }
   if (value > 12) {
     return "Maximum is 12 dice.";
-  }
-  if (value === 1 || value === 2) {
-    return null;
-  }
-  if (value % 2 !== 0) {
-    return "Above 2 dice, only even counts are allowed (4, 6, 8, 10, 12).";
   }
   if (!isValidDiceCount(value)) {
     return `Choose ${VALID_DICE_COUNTS.join(", ")}.`;

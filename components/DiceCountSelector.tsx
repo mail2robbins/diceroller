@@ -111,7 +111,7 @@ export function DiceCountSelector({
         </button>
       </div>
       <p id={hintId} className="text-xs text-zinc-500">
-        Allowed: 1, 2, or even counts up to 12 (4, 6, 8, 10, 12).
+        Allowed: 1 to 12 dice.
       </p>
       <div className="flex flex-wrap gap-2">
         <input

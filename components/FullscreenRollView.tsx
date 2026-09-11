@@ -17,10 +17,7 @@ type FullscreenRollViewProps = {
 };
 
 function gridClassForCount(count: number): string {
-  if (count <= 2) return "grid-cols-2 max-w-sm";
-  if (count <= 4) return "grid-cols-2 sm:grid-cols-4 max-w-lg";
-  if (count <= 6) return "grid-cols-3 sm:grid-cols-6 max-w-3xl";
-  return "grid-cols-4 sm:grid-cols-6 max-w-4xl";
+  return "flex flex-wrap justify-center gap-4 sm:gap-6 w-full";
 }
 
 export function FullscreenRollView({
@@ -130,7 +127,7 @@ export function FullscreenRollView({
           {animating ? "Rolling dice." : lastRollAnnouncement}
         </p>
         <div
-          className={`grid w-full justify-items-center gap-4 sm:gap-6 ${gridClassForCount(diceCount)}`}
+          className={`w-full ${gridClassForCount(diceCount)}`}
         >
           {targets.map((_, i) => (
             <Die3D
