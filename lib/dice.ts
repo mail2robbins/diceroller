@@ -41,21 +41,6 @@ export function validationMessageForCount(value: number): string | null {
   return null;
 }
 
-export function clampToValidDiceCount(value: number): DiceCount {
-  if (isValidDiceCount(value)) return value;
-  const sorted = [...VALID_DICE_COUNTS];
-  let closest: DiceCount = 1;
-  let minDiff = Infinity;
-  for (const n of sorted) {
-    const diff = Math.abs(n - value);
-    if (diff < minDiff) {
-      minDiff = diff;
-      closest = n;
-    }
-  }
-  return closest;
-}
-
 export function rollDice(count: DiceCount): number[] {
   return Array.from({ length: count }, () => 1 + Math.floor(Math.random() * 6));
 }

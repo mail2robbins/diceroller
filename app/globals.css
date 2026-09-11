@@ -1,8 +1,10 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #09090b;
+  --foreground: #fafafa;
+  --surface: #18181b;
+  --accent: #f59e0b;
 }
 
 @theme inline {
@@ -12,15 +14,68 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+.die-scene {
+  perspective: 1100px;
+  perspective-origin: 50% 42%;
+}
+
+.die-cube {
+  transform-style: preserve-3d;
+}
+
+.die-cube-settled {
+  transition: transform 0.12s ease-out;
+}
+
+.die-floor-shadow {
+  transform-origin: center;
+  opacity: 0.45;
+}
+
+@keyframes die-shake-spin {
+  0% {
+    transform: rotate(0deg) translateX(0);
+  }
+  15% {
+    transform: rotate(-12deg) translateX(-3px);
+  }
+  30% {
+    transform: rotate(10deg) translateX(3px);
+  }
+  45% {
+    transform: rotate(-8deg) translateX(-2px);
+  }
+  60% {
+    transform: rotate(360deg) scale(1.05);
+  }
+  75% {
+    transform: rotate(-6deg) translateX(2px);
+  }
+  100% {
+    transform: rotate(0deg) translateX(0);
+  }
+}
+
+.die-rolling {
+  animation: die-shake-spin 0.55s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .die-cube-settled {
+    transition: none;
+  }
+  .die-rolling {
+    animation: none;
+    opacity: 0.85;
+  }
 }
