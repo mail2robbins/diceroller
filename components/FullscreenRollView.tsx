@@ -40,6 +40,8 @@ export function FullscreenRollView({
   const targetsRef = useRef(targets);
   targetsRef.current = targets;
 
+  const currentSum = animating ? 0 : sumValues(targets);
+
   const startRoll = useCallback(() => {
     if (animating) return;
     const result = rollDice(diceCount);
@@ -141,22 +143,59 @@ export function FullscreenRollView({
         </div>
       </div>
 
-      <footer className="shrink-0 space-y-4 border-t border-zinc-800/80 px-4 py-4 sm:px-6">
-        <button
-          type="button"
-          onClick={startRoll}
-          disabled={animating}
-          className="h-14 w-full rounded-2xl bg-gradient-to-r from-amber-500 to-orange-600 text-lg font-semibold text-zinc-950 shadow-lg shadow-amber-900/30 transition hover:from-amber-400 hover:to-orange-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300 disabled:cursor-not-allowed disabled:opacity-50"
-          aria-busy={animating}
-        >
-          {animating ? "Rolling…" : "Roll again"}
-        </button>
-        {historyOpen ? (
-          <div id="roll-history-panel">
-            <RollHistoryList history={history} hydrated={hydrated} />
-          </div>
-        ) : null}
+      <footer className="shrink-0 border-t border-zinc-800/80 px-4 py-4 sm:px-6">
+        <div className="flex items-center gap-4">
+          <button
+            type="button"
+            onClick={startRoll}
+            disabled={animating}
+            className="h-14 flex-1 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-600 text-lg font-semibold text-zinc-950 shadow-lg shadow-amber-900/30 transition hover:from-amber-400 hover:to-orange-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300 disabled:cursor-not-allowed disabled:opacity-50"
+            aria-busy={animating}
+          >
+            {animating ? "Rolling…" : "Roll again"}
+          </button>
+          {!animating && (
+            <div className="flex min-w-[120px] flex-col items-center justify-center rounded-2xl bg-zinc-900 border border-zinc-800 px-6 py-3">
+              <p className="text-3xl font-bold text-zinc-50">
+                {currentSum}
+              </p>
+              <p className="text-xs text-zinc-400">
+                Total
+              </p>
+            </div>
+          )}
+        </div>
       </footer>
+
+      {historyOpen && (
+        <div
+          className="fixed inset-0 z-[60] flex items-center justify-center bg-black/80 p-4"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="history-modal-title"
+        >
+          <div className="w-full max-w-md rounded-2xl bg-zinc-900 border border-zinc-800 shadow-2xl">
+            <div className="flex items-center justify-between border-b border-zinc-800 px-6 py-4">
+              <h2 id="history-modal-title" className="text-lg font-semibold text-zinc-50">
+                Roll History
+              </h2>
+              <button
+                type="button"
+                onClick={() => setHistoryOpen(false)}
+                className="rounded-lg p-2 text-zinc-400 transition hover:bg-zinc-800 hover:text-zinc-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400"
+                aria-label="Close history"
+              >
+                <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <div className="max-h-[60vh] overflow-y-auto p-6">
+              <RollHistoryList history={history} hydrated={hydrated} />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
