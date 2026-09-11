@@ -43,7 +43,7 @@ export function Die3D({
 
   const sizeClass =
     size === "lg"
-      ? "h-[clamp(4rem,16vw,6.25rem)] w-[clamp(4rem,16vw,6.25rem)]"
+      ? "h-[clamp(5rem,25vw,10rem)] w-[clamp(5rem,25vw,10rem)]"
       : "h-16 w-16";
 
   useLayoutEffect(() => {

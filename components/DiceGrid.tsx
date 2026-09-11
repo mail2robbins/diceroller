@@ -12,7 +12,7 @@ export function DiceGrid({ values, rolling = false }: DiceGridProps) {
   
   return (
     <div
-      className="mx-auto flex w-full flex-wrap justify-center gap-3 sm:gap-4"
+      className="mx-auto flex w-full flex-wrap justify-center gap-4 sm:gap-6"
       role="list"
       aria-label={rolling ? "Dice rolling" : `${count} dice showing results`}
     >
