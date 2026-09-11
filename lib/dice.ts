@@ -42,3 +42,26 @@ export function rollDice(count: DiceCount): number[] {
 export function sumValues(values: number[]): number {
   return values.reduce((a, b) => a + b, 0);
 }
+
+export function rollAlphabets(): string[] {
+  const alphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+  const shuffled = [...alphabets];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+}
+
+export function rollDigits(max: number): number[] {
+  if (max < 1 || max > 1000) {
+    throw new Error("Max must be between 1 and 1000");
+  }
+  const digits = Array.from({ length: max }, (_, i) => i + 1);
+  const shuffled = [...digits];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+}

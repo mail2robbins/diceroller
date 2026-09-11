@@ -105,7 +105,7 @@ export function FullscreenRollView({
           disabled={animating}
           className="rounded-lg border border-zinc-700 bg-zinc-900 px-3 py-2 text-sm text-zinc-300 transition hover:bg-zinc-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400 disabled:opacity-50"
         >
-          ← Change dice
+          ← Back
         </button>
         <p
           id="fullscreen-roll-title"
@@ -158,9 +158,6 @@ export function FullscreenRollView({
             <div className="flex min-w-[120px] flex-col items-center justify-center rounded-2xl bg-zinc-900 border border-zinc-800 px-6 py-3">
               <p className="text-3xl font-bold text-zinc-50">
                 {currentSum}
-              </p>
-              <p className="text-xs text-zinc-400">
-                Total
               </p>
             </div>
           )}
