@@ -149,7 +149,7 @@ export function FullscreenRollView({
             type="button"
             onClick={startRoll}
             disabled={animating}
-            className="h-14 flex-1 rounded-2xl bg-[var(--gradient-accent)] text-lg font-semibold text-[var(--color-primary-dark)] shadow-lg shadow-[var(--color-accent)]/20 transition hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)] disabled:cursor-not-allowed disabled:opacity-50 font-display"
+            className="h-14 flex-1 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-600 text-lg font-semibold text-zinc-950 shadow-lg shadow-amber-900/30 transition hover:from-amber-400 hover:to-orange-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300 disabled:cursor-not-allowed disabled:opacity-50 font-display"
             aria-busy={animating}
           >
             {animating ? "Rolling…" : "Roll again"}

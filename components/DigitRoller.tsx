@@ -127,7 +127,7 @@ export function DigitRoller({ onBack }: DigitRollerProps) {
           >
             <div className="flex h-full items-center justify-center">
               <span
-                className={`text-7xl font-bold text-[var(--color-text-primary)] sm:text-8xl transition-all font-display ${
+                className={`text-9xl font-bold text-[var(--color-text-primary)] sm:text-9xl transition-all font-display ${
                   rolling ? "blur-sm opacity-70" : "blur-none opacity-100"
                 }`}
               >
@@ -149,7 +149,7 @@ export function DigitRoller({ onBack }: DigitRollerProps) {
             type="button"
             onClick={handleRoll}
             disabled={rolling}
-            className="h-14 flex-[2] rounded-2xl bg-[var(--gradient-accent)] text-lg font-semibold text-[var(--color-primary-dark)] shadow-lg shadow-[var(--color-accent)]/20 transition hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)] disabled:cursor-not-allowed disabled:opacity-50 font-display"
+            className="h-14 flex-[2] rounded-2xl bg-gradient-to-r from-amber-500 to-orange-600 text-lg font-semibold text-zinc-950 shadow-lg shadow-amber-900/30 transition hover:from-amber-400 hover:to-orange-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300 disabled:cursor-not-allowed disabled:opacity-50 font-display"
           >
             {rolling ? "Rolling…" : "Roll again"}
           </button>

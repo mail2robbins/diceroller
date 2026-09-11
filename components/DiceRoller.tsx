@@ -68,7 +68,7 @@ export function DiceRoller() {
           <button
             type="button"
             onClick={() => setInSession(true)}
-            className="h-14 w-full rounded-2xl bg-[var(--gradient-accent)] text-lg font-semibold text-[var(--color-primary-dark)] shadow-lg shadow-[var(--color-accent)]/20 transition hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)] font-display"
+            className="h-14 w-full rounded-2xl bg-gradient-to-r from-amber-500 to-orange-600 text-lg font-semibold text-zinc-950 shadow-lg shadow-amber-900/30 transition hover:from-amber-400 hover:to-orange-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300 font-display"
           >
             Start rolling
           </button>
