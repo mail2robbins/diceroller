@@ -4,8 +4,8 @@
   "description": "Roll 1–12 six-sided dice with history and sound.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#09090b",
-  "theme_color": "#f59e0b",
+  "background_color": "#1a1a1f",
+  "theme_color": "#ff6b4a",
   "orientation": "any",
   "icons": [
     {

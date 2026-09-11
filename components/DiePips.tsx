@@ -54,7 +54,7 @@ export function DiePips({ value, className = "" }: DiePipsProps) {
         return (
           <span
             key={cell}
-            className={`m-auto rounded-full bg-red-500 shadow-inner ${
+            className={`m-auto rounded-full bg-[var(--color-accent)] shadow-inner ${
               show ? "h-[65%] w-[65%] opacity-100" : "h-0 w-0 opacity-0"
             }`}
           />

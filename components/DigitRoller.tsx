@@ -73,10 +73,10 @@ export function DigitRoller({ onBack }: DigitRollerProps) {
     <div className="flex min-h-[100dvh] w-full flex-col items-center justify-center px-4 py-10 sm:px-6">
       <div className="flex w-full max-w-md flex-col gap-8">
         <header className="space-y-2 text-center">
-          <h1 className="text-3xl font-bold tracking-tight text-zinc-50 sm:text-4xl">
+          <h1 className="text-4xl font-bold tracking-tight text-[var(--color-text-primary)] sm:text-5xl font-display">
             Digit Roller
           </h1>
-          <p className="text-sm text-zinc-400">
+          <p className="text-sm text-[var(--color-text-secondary)]">
             Random number from 1 to n (max: 1000)
           </p>
         </header>
@@ -84,7 +84,7 @@ export function DigitRoller({ onBack }: DigitRollerProps) {
         <div className="space-y-3">
           <label
             htmlFor="max-input"
-            className="block text-sm font-medium text-zinc-300"
+            className="block text-sm font-medium text-[var(--color-text-secondary)]"
           >
             Maximum number (1-1000)
           </label>
@@ -96,7 +96,7 @@ export function DigitRoller({ onBack }: DigitRollerProps) {
               max={1000}
               value={max}
               onChange={(e) => handleMaxChange(e.target.value)}
-              className="h-11 flex-1 rounded-lg border border-zinc-600 bg-zinc-800 px-3 text-zinc-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400"
+              className="h-11 flex-1 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] px-3 text-[var(--color-text-primary)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
               placeholder="Enter max number"
             />
             <button
@@ -107,13 +107,13 @@ export function DigitRoller({ onBack }: DigitRollerProps) {
                 setTargetDigit(shuffled[0]);
               }}
               disabled={rolling}
-              className="h-11 rounded-lg border border-zinc-600 bg-zinc-800 px-4 text-sm font-medium text-zinc-200 hover:bg-zinc-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400 disabled:opacity-40"
+              className="h-11 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] px-4 text-sm font-medium text-[var(--color-text-secondary)] hover:bg-[var(--color-surface-hover)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)] disabled:opacity-40"
             >
               Apply
             </button>
           </div>
           {error && (
-            <p className="rounded-lg border border-amber-900/50 bg-amber-950/40 px-3 py-2 text-sm text-amber-200">
+            <p className="rounded-lg border border-[var(--color-error)]/50 bg-[var(--color-error)]/10 px-3 py-2 text-sm text-[var(--color-error)]">
               {error}
             </p>
           )}
@@ -121,13 +121,13 @@ export function DigitRoller({ onBack }: DigitRollerProps) {
 
         <div className="flex items-center justify-center">
           <div
-            className={`relative aspect-square w-full max-w-[20rem] rounded-2xl border-2 border-zinc-600 bg-gradient-to-br from-zinc-800 to-zinc-900 shadow-2xl shadow-black/50 transition-transform ${
+            className={`relative aspect-square w-full max-w-[20rem] rounded-2xl border-2 border-[var(--color-border)] bg-[var(--gradient-surface)] shadow-2xl shadow-black/50 transition-transform ${
               rolling ? "scale-95" : "scale-100"
             }`}
           >
             <div className="flex h-full items-center justify-center">
               <span
-                className={`text-7xl font-bold text-zinc-100 sm:text-8xl transition-all ${
+                className={`text-7xl font-bold text-[var(--color-text-primary)] sm:text-8xl transition-all font-display ${
                   rolling ? "blur-sm opacity-70" : "blur-none opacity-100"
                 }`}
               >
@@ -141,7 +141,7 @@ export function DigitRoller({ onBack }: DigitRollerProps) {
           <button
             type="button"
             onClick={onBack}
-            className="h-14 flex-1 rounded-2xl border-2 border-zinc-700 bg-zinc-900 text-lg font-semibold text-zinc-300 transition hover:bg-zinc-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400"
+            className="h-14 flex-1 rounded-2xl border-2 border-[var(--color-border)] bg-[var(--color-surface)] text-lg font-semibold text-[var(--color-text-secondary)] transition hover:bg-[var(--color-surface-hover)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
           >
             ← Back
           </button>
@@ -149,7 +149,7 @@ export function DigitRoller({ onBack }: DigitRollerProps) {
             type="button"
             onClick={handleRoll}
             disabled={rolling}
-            className="h-14 flex-[2] rounded-2xl bg-gradient-to-r from-amber-500 to-orange-600 text-lg font-semibold text-zinc-950 shadow-lg shadow-amber-900/30 transition hover:from-amber-400 hover:to-orange-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300 disabled:cursor-not-allowed disabled:opacity-50"
+            className="h-14 flex-[2] rounded-2xl bg-[var(--gradient-accent)] text-lg font-semibold text-[var(--color-primary-dark)] shadow-lg shadow-[var(--color-accent)]/20 transition hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)] disabled:cursor-not-allowed disabled:opacity-50 font-display"
           >
             {rolling ? "Rolling…" : "Roll again"}
           </button>

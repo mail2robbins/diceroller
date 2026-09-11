@@ -22,20 +22,20 @@ export function RollHistoryList({ history, hydrated }: RollHistoryListProps) {
     >
       <h2
         id="roll-history-heading"
-        className="text-lg font-semibold text-zinc-200"
+        className="text-lg font-semibold text-[var(--color-text-primary)] font-display"
       >
         Roll history
       </h2>
       <div
-        className="max-h-56 overflow-y-auto rounded-xl border border-zinc-800 bg-zinc-900/60 p-2 sm:max-h-64"
+        className="max-h-56 overflow-y-auto rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-2 sm:max-h-64"
         tabIndex={0}
         role="region"
         aria-label="Last ten rolls"
       >
         {!hydrated ? (
-          <p className="px-2 py-4 text-sm text-zinc-500">Loading history…</p>
+          <p className="px-2 py-4 text-sm text-[var(--color-text-muted)]">Loading history…</p>
         ) : history.length === 0 ? (
-          <p className="px-2 py-4 text-sm text-zinc-500">
+          <p className="px-2 py-4 text-sm text-[var(--color-text-muted)]">
             No rolls yet. Hit Roll to start.
           </p>
         ) : (
@@ -43,22 +43,22 @@ export function RollHistoryList({ history, hydrated }: RollHistoryListProps) {
             {history.map((entry) => (
               <li
                 key={entry.id}
-                className="rounded-lg border border-zinc-800 bg-zinc-950/80 px-3 py-2 text-sm"
+                className="rounded-lg border border-[var(--color-border)] bg-[var(--color-primary-dark)] px-3 py-2 text-sm"
               >
                 <div className="flex flex-wrap items-baseline justify-between gap-2">
-                  <span className="font-medium text-zinc-300">
+                  <span className="font-medium text-[var(--color-text-secondary)]">
                     {entry.diceCount}{" "}
                     {entry.diceCount === 1 ? "die" : "dice"} · sum{" "}
-                    <span className="text-amber-400">{entry.sum}</span>
+                    <span className="text-[var(--color-accent)]">{entry.sum}</span>
                   </span>
                   <time
-                    className="text-xs text-zinc-500"
+                    className="text-xs text-[var(--color-text-muted)]"
                     dateTime={new Date(entry.timestamp).toISOString()}
                   >
                     {formatTime(entry.timestamp)}
                   </time>
                 </div>
-                <p className="mt-1 font-mono text-xs text-zinc-500">
+                <p className="mt-1 font-mono text-xs text-[var(--color-text-muted)]">
                   [{entry.values.join(", ")}]
                 </p>
               </li>

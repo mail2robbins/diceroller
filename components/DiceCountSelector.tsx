@@ -67,7 +67,7 @@ export function DiceCountSelector({
     <div className="w-full max-w-md space-y-3">
       <label
         htmlFor={id}
-        className="block text-sm font-medium text-zinc-300"
+        className="block text-sm font-medium text-[var(--color-text-secondary)]"
       >
         Number of dice
       </label>
@@ -76,7 +76,7 @@ export function DiceCountSelector({
           type="button"
           onClick={() => step(-1)}
           disabled={disabled || value === VALID_DICE_COUNTS[0]}
-          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-zinc-600 bg-zinc-800 text-lg text-zinc-100 transition hover:bg-zinc-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400 disabled:cursor-not-allowed disabled:opacity-40"
+          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] text-lg text-[var(--color-text-primary)] transition hover:bg-[var(--color-surface-hover)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)] disabled:cursor-not-allowed disabled:opacity-40"
           aria-label="Fewer dice"
         >
           −
@@ -89,7 +89,7 @@ export function DiceCountSelector({
             setError(null);
             onChange(Number(e.target.value) as DiceCount);
           }}
-          className="h-11 min-w-[5rem] flex-1 rounded-lg border border-zinc-600 bg-zinc-800 px-3 text-zinc-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400 disabled:opacity-50"
+          className="h-11 min-w-[5rem] flex-1 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] px-3 text-[var(--color-text-primary)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)] disabled:opacity-50"
           aria-describedby={`${hintId}${error ? ` ${errorId}` : ""}`}
         >
           {VALID_DICE_COUNTS.map((n) => (
@@ -104,13 +104,13 @@ export function DiceCountSelector({
           disabled={
             disabled || value === VALID_DICE_COUNTS[VALID_DICE_COUNTS.length - 1]
           }
-          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-zinc-600 bg-zinc-800 text-lg text-zinc-100 transition hover:bg-zinc-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400 disabled:cursor-not-allowed disabled:opacity-40"
+          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] text-lg text-[var(--color-text-primary)] transition hover:bg-[var(--color-surface-hover)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)] disabled:cursor-not-allowed disabled:opacity-40"
           aria-label="More dice"
         >
           +
         </button>
       </div>
-      <p id={hintId} className="text-xs text-zinc-500">
+      <p id={hintId} className="text-xs text-[var(--color-text-muted)]">
         Allowed: 1 to 12 dice.
       </p>
       <div className="flex flex-wrap gap-2">
@@ -132,7 +132,7 @@ export function DiceCountSelector({
               handleCustomSubmit();
             }
           }}
-          className="h-10 min-w-0 flex-1 rounded-lg border border-zinc-700 bg-zinc-900 px-3 text-sm text-zinc-100 placeholder:text-zinc-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400 disabled:opacity-50"
+          className="h-10 min-w-0 flex-1 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] px-3 text-sm text-[var(--color-text-primary)] placeholder:text-[var(--color-text-muted)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)] disabled:opacity-50"
           aria-label="Custom dice count"
           aria-invalid={error ? true : undefined}
           aria-describedby={error ? errorId : hintId}
@@ -141,7 +141,7 @@ export function DiceCountSelector({
           type="button"
           onClick={handleCustomSubmit}
           disabled={disabled || !customInput.trim()}
-          className="h-10 rounded-lg border border-zinc-600 bg-zinc-800 px-4 text-sm font-medium text-zinc-200 hover:bg-zinc-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400 disabled:opacity-40"
+          className="h-10 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] px-4 text-sm font-medium text-[var(--color-text-secondary)] hover:bg-[var(--color-surface-hover)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)] disabled:opacity-40"
         >
           Apply
         </button>
@@ -150,7 +150,7 @@ export function DiceCountSelector({
         <p
           id={errorId}
           role="alert"
-          className="rounded-lg border border-amber-900/50 bg-amber-950/40 px-3 py-2 text-sm text-amber-200"
+          className="rounded-lg border border-[var(--color-error)]/50 bg-[var(--color-error)]/10 px-3 py-2 text-sm text-[var(--color-error)]"
         >
           {error}
         </p>

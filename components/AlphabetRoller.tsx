@@ -51,23 +51,23 @@ export function AlphabetRoller({ onBack }: AlphabetRollerProps) {
     <div className="flex min-h-[100dvh] w-full flex-col items-center justify-center px-4 py-10 sm:px-6">
       <div className="flex w-full max-w-md flex-col gap-8">
         <header className="space-y-2 text-center">
-          <h1 className="text-3xl font-bold tracking-tight text-zinc-50 sm:text-4xl">
+          <h1 className="text-4xl font-bold tracking-tight text-[var(--color-text-primary)] sm:text-5xl font-display">
             Alphabet Roller
           </h1>
-          <p className="text-sm text-zinc-400">
+          <p className="text-sm text-[var(--color-text-secondary)]">
             Random letter from A-Z
           </p>
         </header>
 
         <div className="flex items-center justify-center">
           <div
-            className={`relative aspect-square w-full max-w-[20rem] rounded-2xl border-2 border-zinc-600 bg-gradient-to-br from-zinc-800 to-zinc-900 shadow-2xl shadow-black/50 transition-transform ${
+            className={`relative aspect-square w-full max-w-[20rem] rounded-2xl border-2 border-[var(--color-border)] bg-[var(--gradient-surface)] shadow-2xl shadow-black/50 transition-transform ${
               rolling ? "scale-95" : "scale-100"
             }`}
           >
             <div className="flex h-full items-center justify-center">
               <span
-                className={`text-8xl font-bold text-zinc-100 sm:text-9xl transition-all ${
+                className={`text-8xl font-bold text-[var(--color-text-primary)] sm:text-9xl transition-all font-display ${
                   rolling ? "blur-sm opacity-70" : "blur-none opacity-100"
                 }`}
               >
@@ -81,7 +81,7 @@ export function AlphabetRoller({ onBack }: AlphabetRollerProps) {
           <button
             type="button"
             onClick={onBack}
-            className="h-14 flex-1 rounded-2xl border-2 border-zinc-700 bg-zinc-900 text-lg font-semibold text-zinc-300 transition hover:bg-zinc-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400"
+            className="h-14 flex-1 rounded-2xl border-2 border-[var(--color-border)] bg-[var(--color-surface)] text-lg font-semibold text-[var(--color-text-secondary)] transition hover:bg-[var(--color-surface-hover)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
           >
             ← Back
           </button>
@@ -89,7 +89,7 @@ export function AlphabetRoller({ onBack }: AlphabetRollerProps) {
             type="button"
             onClick={handleRoll}
             disabled={rolling}
-            className="h-14 flex-[2] rounded-2xl bg-gradient-to-r from-amber-500 to-orange-600 text-lg font-semibold text-zinc-950 shadow-lg shadow-amber-900/30 transition hover:from-amber-400 hover:to-orange-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300 disabled:cursor-not-allowed disabled:opacity-50"
+            className="h-14 flex-[2] rounded-2xl bg-[var(--gradient-accent)] text-lg font-semibold text-[var(--color-primary-dark)] shadow-lg shadow-[var(--color-accent)]/20 transition hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)] disabled:cursor-not-allowed disabled:opacity-50 font-display"
           >
             {rolling ? "Rolling…" : "Roll again"}
           </button>

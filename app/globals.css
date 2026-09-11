@@ -1,23 +1,69 @@
 @import "tailwindcss";
 
 :root {
-  --background: #09090b;
-  --foreground: #fafafa;
-  --surface: #18181b;
-  --accent: #f59e0b;
+  /* Color Palette - Earth tones with warm accent */
+  --color-primary: #1a1a1f;
+  --color-primary-light: #25252b;
+  --color-primary-dark: #121215;
+  --color-accent: #ff6b4a;
+  --color-accent-hover: #ff8566;
+  --color-accent-subtle: rgba(255, 107, 74, 0.15);
+  --color-text-primary: #f5f5f0;
+  --color-text-secondary: #a0a0a5;
+  --color-text-muted: #6b6b70;
+  --color-border: #3a3a40;
+  --color-border-light: #4a4a50;
+  --color-surface: #25252b;
+  --color-surface-hover: #2f2f35;
+  --color-success: #4ade80;
+  --color-warning: #fbbf24;
+  --color-error: #f87171;
+
+  /* Gradient backgrounds */
+  --gradient-primary: linear-gradient(135deg, #1a1a1f 0%, #25252b 50%, #1f1f24 100%);
+  --gradient-surface: linear-gradient(180deg, #25252b 0%, #1f1f24 100%);
+  --gradient-accent: linear-gradient(135deg, #ff6b4a 0%, #ff8566 100%);
+  --gradient-subtle: linear-gradient(45deg, rgba(255, 107, 74, 0.08) 0%, rgba(255, 107, 74, 0.02) 100%);
+
+  /* Pattern backgrounds */
+  --pattern-dots: radial-gradient(circle at 1px 1px, rgba(255, 107, 74, 0.03) 1px, transparent 0);
+  --pattern-grid: linear-gradient(rgba(255, 107, 74, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 107, 74, 0.02) 1px, transparent 1px);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background: var(--color-primary);
+  --color-foreground: var(--color-text-primary);
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  background: var(--gradient-primary);
+  color: var(--color-text-primary);
+  font-family: var(--font-body), system-ui, sans-serif;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Add subtle geometric pattern overlay */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--pattern-dots);
+  background-size: 24px 24px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Ensure content sits above pattern */
+body > * {
+  position: relative;
+  z-index: 1;
 }
 
 .backface-hidden {

@@ -144,37 +144,37 @@ export function Die3D({
             <>
               <CubeFace
                 style={{ transform: transforms.front }}
-                className="bg-[#f4f1ea]"
+                className="bg-[var(--color-surface)]"
               >
                 <DiePips value={1} />
               </CubeFace>
               <CubeFace
                 style={{ transform: transforms.back }}
-                className="bg-[#ebe6dc]"
+                className="bg-[var(--color-primary-light)]"
               >
                 <DiePips value={6} />
               </CubeFace>
               <CubeFace
                 style={{ transform: transforms.right }}
-                className="bg-[#f4f1ea]"
+                className="bg-[var(--color-surface)]"
               >
                 <DiePips value={3} />
               </CubeFace>
               <CubeFace
                 style={{ transform: transforms.left }}
-                className="bg-[#ebe6dc]"
+                className="bg-[var(--color-primary-light)]"
               >
                 <DiePips value={4} />
               </CubeFace>
               <CubeFace
                 style={{ transform: transforms.top }}
-                className="bg-[#f4f1ea]"
+                className="bg-[var(--color-surface)]"
               >
                 <DiePips value={2} />
               </CubeFace>
               <CubeFace
                 style={{ transform: transforms.bottom }}
-                className="bg-[#ebe6dc]"
+                className="bg-[var(--color-primary-light)]"
               >
                 <DiePips value={5} />
               </CubeFace>
@@ -202,7 +202,7 @@ function CubeFace({
 }) {
   return (
     <div
-      className={`absolute inset-0 flex items-center justify-center rounded-[14%] border border-zinc-400/90 shadow-[inset_0_1px_0_rgba(255,255,255,0.65),inset_0_-3px_8px_rgba(0,0,0,0.12)] backface-hidden ${className}`}
+      className={`absolute inset-0 flex items-center justify-center rounded-[14%] border border-[var(--color-border-light)] shadow-[inset_0_1px_0_rgba(255,255,255,0.1),inset_0_-3px_8px_rgba(0,0,0,0.2)] backface-hidden ${className}`}
       style={style}
     >
       {children}
