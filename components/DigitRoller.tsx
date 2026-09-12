@@ -33,9 +33,9 @@ export function DigitRoller({ onBack }: DigitRollerProps) {
       return;
     }
     if (rolling) return;
-    
+
     setError(null);
-    
+
     if (remainingDigits.length === 0) {
       const digits = Array.from({ length: max }, (_, i) => i + 1);
       setRemainingDigits(digits);
@@ -47,7 +47,7 @@ export function DigitRoller({ onBack }: DigitRollerProps) {
       setHasRolled(true);
       return;
     }
-    
+
     const shuffled = rollDigits(max);
     const availableDigit = shuffled.find(digit => remainingDigits.includes(digit)) || remainingDigits[0];
     setTargetDigit(availableDigit);
@@ -167,20 +167,27 @@ export function DigitRoller({ onBack }: DigitRollerProps) {
 
         <div className="flex items-center justify-center">
           <div
-            className={`relative aspect-square w-full max-w-[20rem] rounded-2xl border-2 border-[var(--color-border)] bg-[var(--gradient-surface)] shadow-2xl shadow-black/50 transition-transform ${
-              rolling ? "scale-95" : "scale-100"
-            }`}
+            className={`relative aspect-square w-full max-w-[20rem] rounded-2xl border-2 border-[var(--color-border)] bg-[var(--gradient-surface)] shadow-2xl shadow-black/50 transition-transform ${rolling ? "scale-95" : "scale-100"
+              }`}
           >
-            <div className="flex h-full items-center justify-center">
+            <div className="flex h-full items-center justify-center p-2">
               {!hasRolled ? (
-                <span className="text-4xl font-medium text-[var(--color-text-secondary)] animate-pulse">
-                  Click Roll to start
+                <span className="text-6xl sm:text-7xl font-light text-center text-[var(--color-text-secondary)] animate-pulse">
+                  -
                 </span>
               ) : (
                 <span
-                  className={`text-9xl font-bold bg-gradient-to-br from-blue-500 via-cyan-500 to-teal-500 bg-clip-text text-transparent sm:text-9xl transition-all font-display ${
-                    rolling ? "blur-sm opacity-70" : "blur-none opacity-100"
-                  }`}
+                  className={`inline-block px-8 py-6 font-bold bg-gradient-to-br from-yellow-500 via-amber-500 to-orange-500 bg-clip-text text-transparent leading-none transition-all font-display select-none ${max >= 1000
+                    ? "text-5xl sm:text-6xl"
+                    : max >= 100
+                      ? "text-6xl sm:text-7xl"
+                      : max > 20
+                        ? "text-7xl sm:text-[8rem]"
+                        : max > 10
+                          ? "text-[8rem] sm:text-[9.5rem]"
+                          : "text-[9.5rem] sm:text-[11.5rem]"
+                    } ${rolling ? "blur-sm opacity-70" : "blur-none opacity-100"
+                    }`}
                 >
                   {currentDigit}
                 </span>

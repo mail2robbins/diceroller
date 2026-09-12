@@ -20,7 +20,7 @@ export function AlphabetRoller({ onBack }: AlphabetRollerProps) {
 
   const handleRoll = () => {
     if (rolling) return;
-    
+
     if (remainingLetters.length === 0) {
       setRemainingLetters([...ALPHABETS]);
       setCompleted(false);
@@ -31,7 +31,7 @@ export function AlphabetRoller({ onBack }: AlphabetRollerProps) {
       setHasRolled(true);
       return;
     }
-    
+
     const shuffled = rollAlphabets();
     const availableLetter = shuffled.find(letter => remainingLetters.includes(letter)) || remainingLetters[0];
     setTargetLetter(availableLetter);
@@ -95,20 +95,18 @@ export function AlphabetRoller({ onBack }: AlphabetRollerProps) {
 
         <div className="flex items-center justify-center">
           <div
-            className={`relative aspect-square w-full max-w-[20rem] rounded-2xl border-2 border-[var(--color-border)] bg-[var(--gradient-surface)] shadow-2xl shadow-black/50 transition-transform ${
-              rolling ? "scale-95" : "scale-100"
-            }`}
+            className={`relative aspect-square w-full max-w-[20rem] rounded-2xl border-2 border-[var(--color-border)] bg-[var(--gradient-surface)] shadow-2xl shadow-black/50 transition-transform ${rolling ? "scale-95" : "scale-100"
+              }`}
           >
-            <div className="flex h-full items-center justify-center p-8">
+            <div className="flex h-full items-center justify-center p-2">
               {!hasRolled ? (
-                <span className="text-4xl font-medium text-[var(--color-text-secondary)] animate-pulse">
-                  Click Roll to start
+                <span className="text-6xl sm:text-7xl font-light text-center text-[var(--color-text-secondary)] animate-pulse">
+                  -
                 </span>
               ) : (
                 <span
-                  className={`text-9xl font-bold bg-gradient-to-br from-purple-500 via-pink-500 to-red-500 bg-clip-text text-transparent sm:text-[10rem] transition-all font-display ${
-                    rolling ? "blur-sm opacity-70" : "blur-none opacity-100"
-                  }`}
+                  className={`inline-block px-8 py-6 font-bold bg-gradient-to-br from-purple-500 via-pink-500 to-red-500 bg-clip-text text-transparent text-[10rem] sm:text-[12rem] leading-none transition-all font-display select-none ${rolling ? "blur-sm opacity-70" : "blur-none opacity-100"
+                    }`}
                 >
                   {currentLetter}
                 </span>
