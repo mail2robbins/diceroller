@@ -1,19 +1,20 @@
 "use client";
 
 import { rollAlphabets } from "@/lib/dice";
+import { playRollCompleteSound } from "@/lib/sound";
 import { useEffect, useState } from "react";
 
 type AlphabetRollerProps = {
   onBack: () => void;
+  soundEnabled?: boolean;
 };
 
 const ALPHABETS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
-export function AlphabetRoller({ onBack }: AlphabetRollerProps) {
+export function AlphabetRoller({ onBack, soundEnabled = true }: AlphabetRollerProps) {
   const [currentLetter, setCurrentLetter] = useState<string>("");
   const [targetLetter, setTargetLetter] = useState<string>("");
   const [rolling, setRolling] = useState(false);
-  const [spinIndex, setSpinIndex] = useState(0);
   const [remainingLetters, setRemainingLetters] = useState<string[]>([...ALPHABETS]);
   const [completed, setCompleted] = useState(false);
   const [hasRolled, setHasRolled] = useState(false);
@@ -27,7 +28,6 @@ export function AlphabetRoller({ onBack }: AlphabetRollerProps) {
       const shuffled = rollAlphabets();
       setTargetLetter(shuffled[0]);
       setRolling(true);
-      setSpinIndex(0);
       setHasRolled(true);
       return;
     }
@@ -36,7 +36,6 @@ export function AlphabetRoller({ onBack }: AlphabetRollerProps) {
     const availableLetter = shuffled.find(letter => remainingLetters.includes(letter)) || remainingLetters[0];
     setTargetLetter(availableLetter);
     setRolling(true);
-    setSpinIndex(0);
     setHasRolled(true);
   };
 
@@ -55,31 +54,33 @@ export function AlphabetRoller({ onBack }: AlphabetRollerProps) {
     const totalSpins = 30 + Math.floor(Math.random() * 10);
     const spinDuration = 1500;
     const intervalTime = spinDuration / totalSpins;
+    let spinCount = 0;
 
     const interval = setInterval(() => {
-      setSpinIndex((prev) => {
-        const next = prev + 1;
-        if (next >= totalSpins) {
-          setRolling(false);
-          setCurrentLetter(targetLetter);
-          setRemainingLetters(prev => {
-            const newRemaining = prev.filter(letter => letter !== targetLetter);
-            if (newRemaining.length === 0) {
-              setCompleted(true);
-            }
-            return newRemaining;
-          });
-          return 0;
+      spinCount += 1;
+      if (spinCount >= totalSpins) {
+        clearInterval(interval);
+        setRolling(false);
+        setCurrentLetter(targetLetter);
+        if (soundEnabled) {
+          playRollCompleteSound();
         }
-        if (hasRolled) {
-          setCurrentLetter(ALPHABETS[next % ALPHABETS.length]);
-        }
-        return next;
-      });
+        setRemainingLetters(prev => {
+          const newRemaining = prev.filter(letter => letter !== targetLetter);
+          if (newRemaining.length === 0) {
+            setCompleted(true);
+          }
+          return newRemaining;
+        });
+        return;
+      }
+      if (hasRolled) {
+        setCurrentLetter(ALPHABETS[spinCount % ALPHABETS.length]);
+      }
     }, intervalTime);
 
     return () => clearInterval(interval);
-  }, [rolling, targetLetter, hasRolled]);
+  }, [rolling, targetLetter, hasRolled, soundEnabled]);
 
   return (
     <div className="flex min-h-[100dvh] w-full flex-col items-center justify-center px-4 py-10 sm:px-6">
@@ -118,7 +119,7 @@ export function AlphabetRoller({ onBack }: AlphabetRollerProps) {
         {completed && hasRolled && (
           <div className="rounded-lg border border-[var(--color-accent)]/50 bg-[var(--color-accent)]/10 px-4 py-3 text-center">
             <p className="text-sm font-medium text-[var(--color-accent)]">
-              🎉 You've completed all alphabets! Starting over...
+              🎉 You&apos;ve completed all alphabets! Starting over...
             </p>
           </div>
         )}

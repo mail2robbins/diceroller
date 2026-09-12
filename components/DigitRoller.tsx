@@ -1,31 +1,25 @@
 "use client";
 
 import { rollDigits } from "@/lib/dice";
+import { playRollCompleteSound } from "@/lib/sound";
 import { useEffect, useState } from "react";
 
 type DigitRollerProps = {
   onBack: () => void;
+  soundEnabled?: boolean;
 };
 
-export function DigitRoller({ onBack }: DigitRollerProps) {
+export function DigitRoller({ onBack, soundEnabled = true }: DigitRollerProps) {
   const [max, setMax] = useState(10);
   const [currentDigit, setCurrentDigit] = useState<number>(0);
   const [targetDigit, setTargetDigit] = useState<number>(0);
   const [rolling, setRolling] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [spinIndex, setSpinIndex] = useState(0);
-  const [remainingDigits, setRemainingDigits] = useState<number[]>([]);
+  const [remainingDigits, setRemainingDigits] = useState<number[]>(() =>
+    Array.from({ length: 10 }, (_, i) => i + 1),
+  );
   const [completed, setCompleted] = useState(false);
   const [hasRolled, setHasRolled] = useState(false);
-
-  useEffect(() => {
-    const digits = Array.from({ length: max }, (_, i) => i + 1);
-    setRemainingDigits(digits);
-    setCompleted(false);
-    setHasRolled(false);
-    setCurrentDigit(0);
-    setTargetDigit(0);
-  }, [max]);
 
   const handleRoll = () => {
     if (max < 1 || max > 1000) {
@@ -43,7 +37,6 @@ export function DigitRoller({ onBack }: DigitRollerProps) {
       const shuffled = rollDigits(max);
       setTargetDigit(shuffled[0]);
       setRolling(true);
-      setSpinIndex(0);
       setHasRolled(true);
       return;
     }
@@ -52,7 +45,6 @@ export function DigitRoller({ onBack }: DigitRollerProps) {
     const availableDigit = shuffled.find(digit => remainingDigits.includes(digit)) || remainingDigits[0];
     setTargetDigit(availableDigit);
     setRolling(true);
-    setSpinIndex(0);
     setHasRolled(true);
   };
 
@@ -78,6 +70,12 @@ export function DigitRoller({ onBack }: DigitRollerProps) {
     }
     setError(null);
     setMax(num);
+    const digits = Array.from({ length: num }, (_, i) => i + 1);
+    setRemainingDigits(digits);
+    setCompleted(false);
+    setHasRolled(false);
+    setCurrentDigit(0);
+    setTargetDigit(0);
   };
 
   useEffect(() => {
@@ -86,31 +84,33 @@ export function DigitRoller({ onBack }: DigitRollerProps) {
     const totalSpins = 30 + Math.floor(Math.random() * 10);
     const spinDuration = 1500;
     const intervalTime = spinDuration / totalSpins;
+    let spinCount = 0;
 
     const interval = setInterval(() => {
-      setSpinIndex((prev) => {
-        const next = prev + 1;
-        if (next >= totalSpins) {
-          setRolling(false);
-          setCurrentDigit(targetDigit);
-          setRemainingDigits(prev => {
-            const newRemaining = prev.filter(digit => digit !== targetDigit);
-            if (newRemaining.length === 0) {
-              setCompleted(true);
-            }
-            return newRemaining;
-          });
-          return 0;
+      spinCount += 1;
+      if (spinCount >= totalSpins) {
+        clearInterval(interval);
+        setRolling(false);
+        setCurrentDigit(targetDigit);
+        if (soundEnabled) {
+          playRollCompleteSound();
         }
-        if (hasRolled) {
-          setCurrentDigit((next % max) + 1);
-        }
-        return next;
-      });
+        setRemainingDigits(prev => {
+          const newRemaining = prev.filter(digit => digit !== targetDigit);
+          if (newRemaining.length === 0) {
+            setCompleted(true);
+          }
+          return newRemaining;
+        });
+        return;
+      }
+      if (hasRolled) {
+        setCurrentDigit((spinCount % max) + 1);
+      }
     }, intervalTime);
 
     return () => clearInterval(interval);
-  }, [rolling, targetDigit, max, hasRolled]);
+  }, [rolling, targetDigit, max, hasRolled, soundEnabled]);
 
   return (
     <div className="flex min-h-[100dvh] w-full flex-col items-center justify-center px-4 py-10 sm:px-6">
@@ -199,7 +199,7 @@ export function DigitRoller({ onBack }: DigitRollerProps) {
         {completed && hasRolled && (
           <div className="rounded-lg border border-[var(--color-accent)]/50 bg-[var(--color-accent)]/10 px-4 py-3 text-center">
             <p className="text-sm font-medium text-[var(--color-accent)]">
-              🎉 You've completed all digits! Starting over...
+              🎉 You&apos;ve completed all digits! Starting over...
             </p>
           </div>
         )}

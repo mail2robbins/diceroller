@@ -20,11 +20,21 @@ export function DiceRoller() {
   const [mode, setMode] = useState<RollerMode>("home");
 
   if (mode === "alphabet") {
-    return <AlphabetRoller onBack={() => setMode("home")} />;
+    return (
+      <AlphabetRoller
+        onBack={() => setMode("home")}
+        soundEnabled={soundEnabled}
+      />
+    );
   }
 
   if (mode === "digit") {
-    return <DigitRoller onBack={() => setMode("home")} />;
+    return (
+      <DigitRoller
+        onBack={() => setMode("home")}
+        soundEnabled={soundEnabled}
+      />
+    );
   }
 
   if (mode === "dice") {

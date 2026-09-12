@@ -38,9 +38,11 @@ export function useRollHistory() {
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
-    setHistory(readHistory());
-    setSoundEnabledState(readSoundEnabled());
-    setHydrated(true);
+    queueMicrotask(() => {
+      setHistory(readHistory());
+      setSoundEnabledState(readSoundEnabled());
+      setHydrated(true);
+    });
   }, []);
 
   const pushRoll = useCallback((record: RollRecord) => {

@@ -39,7 +39,10 @@ export function Die3D({
   const sceneRef = useRef<HTMLDivElement>(null);
   const rafRef = useRef<number>(0);
   const onSettledRef = useRef(onSettled);
-  onSettledRef.current = onSettled;
+
+  useEffect(() => {
+    onSettledRef.current = onSettled;
+  }, [onSettled]);
 
   const sizeClass =
     size === "lg"
@@ -73,17 +76,19 @@ export function Die3D({
       if (cubeRef.current) {
         cubeRef.current.style.transform = eulerToTransform(target, 0);
       }
-      setPhase("settled");
-      onSettledRef.current?.();
-      return;
+      const timer = setTimeout(() => {
+        setPhase("settled");
+        onSettledRef.current?.();
+      }, 0);
+      return () => clearTimeout(timer);
     }
 
-    setPhase("rolling");
     const duration = 1250 + index * 140;
     const seed = rollToken * 3.17 + index * 1.91 + face * 0.33;
     const start = performance.now();
 
     const tick = (now: number) => {
+      setPhase((prev) => (prev === "rolling" ? prev : "rolling"));
       const t = Math.min(1, (now - start) / duration);
       const frame = computeRollFrame(t, face, seed);
 

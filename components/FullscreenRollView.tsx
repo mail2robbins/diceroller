@@ -17,6 +17,7 @@ type FullscreenRollViewProps = {
 };
 
 function gridClassForCount(count: number): string {
+  if (count <= 0) return "flex flex-wrap justify-center gap-4 sm:gap-6 w-full";
   return "flex flex-wrap justify-center gap-4 sm:gap-6 w-full";
 }
 
@@ -28,17 +29,15 @@ export function FullscreenRollView({
   onBack,
   onRollComplete,
 }: FullscreenRollViewProps) {
-  const [targets, setTargets] = useState<number[]>(() =>
-    Array.from({ length: diceCount }, () => 1),
-  );
-  const [rollToken, setRollToken] = useState(0);
-  const [animating, setAnimating] = useState(false);
+  const [initialResult] = useState(() => rollDice(diceCount));
+  const [targets, setTargets] = useState<number[]>(initialResult);
+  const [rollToken, setRollToken] = useState(1);
+  const [animating, setAnimating] = useState(true);
   const [historyOpen, setHistoryOpen] = useState(false);
   const [lastRollAnnouncement, setLastRollAnnouncement] = useState("");
   const settledCountRef = useRef(0);
   const soundPlayedRef = useRef(false);
-  const targetsRef = useRef(targets);
-  targetsRef.current = targets;
+  const targetsRef = useRef(initialResult);
 
   const currentSum = animating ? 0 : sumValues(targets);
 
@@ -54,12 +53,8 @@ export function FullscreenRollView({
   }, [animating, diceCount]);
 
   useEffect(() => {
-    const result = rollDice(diceCount);
-    targetsRef.current = result;
-    setTargets(result);
-    setAnimating(true);
-    setRollToken(1);
-  }, [diceCount]);
+    targetsRef.current = targets;
+  }, [targets]);
 
   useEffect(() => {
     document.documentElement.classList.add("overflow-hidden");
