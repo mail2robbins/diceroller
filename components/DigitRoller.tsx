@@ -178,14 +178,10 @@ export function DigitRoller({ onBack, soundEnabled = true }: DigitRollerProps) {
               ) : (
                 <span
                   className={`inline-block px-8 py-6 font-bold bg-gradient-to-br from-yellow-500 via-amber-500 to-orange-500 bg-clip-text text-transparent leading-none transition-all font-display select-none ${max >= 1000
-                    ? "text-5xl sm:text-6xl"
+                    ? "text-9xl sm:text-8xl"
                     : max >= 100
-                      ? "text-6xl sm:text-7xl"
-                      : max > 20
-                        ? "text-7xl sm:text-[8rem]"
-                        : max > 10
-                          ? "text-[8rem] sm:text-[9.5rem]"
-                          : "text-[9.5rem] sm:text-[11.5rem]"
+                      ? "text-9xl"
+                      : "text-9xl"
                     } ${rolling ? "blur-sm opacity-70" : "blur-none opacity-100"
                     }`}
                 >
