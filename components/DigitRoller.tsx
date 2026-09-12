@@ -9,11 +9,23 @@ type DigitRollerProps = {
 
 export function DigitRoller({ onBack }: DigitRollerProps) {
   const [max, setMax] = useState(10);
-  const [currentDigit, setCurrentDigit] = useState<number>(1);
-  const [targetDigit, setTargetDigit] = useState<number>(1);
+  const [currentDigit, setCurrentDigit] = useState<number>(0);
+  const [targetDigit, setTargetDigit] = useState<number>(0);
   const [rolling, setRolling] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [spinIndex, setSpinIndex] = useState(0);
+  const [remainingDigits, setRemainingDigits] = useState<number[]>([]);
+  const [completed, setCompleted] = useState(false);
+  const [hasRolled, setHasRolled] = useState(false);
+
+  useEffect(() => {
+    const digits = Array.from({ length: max }, (_, i) => i + 1);
+    setRemainingDigits(digits);
+    setCompleted(false);
+    setHasRolled(false);
+    setCurrentDigit(0);
+    setTargetDigit(0);
+  }, [max]);
 
   const handleRoll = () => {
     if (max < 1 || max > 1000) {
@@ -23,10 +35,35 @@ export function DigitRoller({ onBack }: DigitRollerProps) {
     if (rolling) return;
     
     setError(null);
+    
+    if (remainingDigits.length === 0) {
+      const digits = Array.from({ length: max }, (_, i) => i + 1);
+      setRemainingDigits(digits);
+      setCompleted(false);
+      const shuffled = rollDigits(max);
+      setTargetDigit(shuffled[0]);
+      setRolling(true);
+      setSpinIndex(0);
+      setHasRolled(true);
+      return;
+    }
+    
     const shuffled = rollDigits(max);
-    setTargetDigit(shuffled[0]);
+    const availableDigit = shuffled.find(digit => remainingDigits.includes(digit)) || remainingDigits[0];
+    setTargetDigit(availableDigit);
     setRolling(true);
     setSpinIndex(0);
+    setHasRolled(true);
+  };
+
+  const handleBack = () => {
+    const digits = Array.from({ length: max }, (_, i) => i + 1);
+    setRemainingDigits(digits);
+    setCompleted(false);
+    setHasRolled(false);
+    setCurrentDigit(0);
+    setTargetDigit(0);
+    onBack();
   };
 
   const handleMaxChange = (value: string) => {
@@ -41,9 +78,6 @@ export function DigitRoller({ onBack }: DigitRollerProps) {
     }
     setError(null);
     setMax(num);
-    const shuffled = rollDigits(num);
-    setCurrentDigit(shuffled[0]);
-    setTargetDigit(shuffled[0]);
   };
 
   useEffect(() => {
@@ -59,15 +93,24 @@ export function DigitRoller({ onBack }: DigitRollerProps) {
         if (next >= totalSpins) {
           setRolling(false);
           setCurrentDigit(targetDigit);
+          setRemainingDigits(prev => {
+            const newRemaining = prev.filter(digit => digit !== targetDigit);
+            if (newRemaining.length === 0) {
+              setCompleted(true);
+            }
+            return newRemaining;
+          });
           return 0;
         }
-        setCurrentDigit((next % max) + 1);
+        if (hasRolled) {
+          setCurrentDigit((next % max) + 1);
+        }
         return next;
       });
     }, intervalTime);
 
     return () => clearInterval(interval);
-  }, [rolling, targetDigit, max]);
+  }, [rolling, targetDigit, max, hasRolled]);
 
   return (
     <div className="flex min-h-[100dvh] w-full flex-col items-center justify-center px-4 py-10 sm:px-6">
@@ -102,9 +145,12 @@ export function DigitRoller({ onBack }: DigitRollerProps) {
             <button
               type="button"
               onClick={() => {
-                const shuffled = rollDigits(max);
-                setCurrentDigit(shuffled[0]);
-                setTargetDigit(shuffled[0]);
+                const digits = Array.from({ length: max }, (_, i) => i + 1);
+                setRemainingDigits(digits);
+                setCompleted(false);
+                setHasRolled(false);
+                setCurrentDigit(0);
+                setTargetDigit(0);
               }}
               disabled={rolling}
               className="h-11 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] px-4 text-sm font-medium text-[var(--color-text-secondary)] hover:bg-[var(--color-surface-hover)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)] disabled:opacity-40"
@@ -126,21 +172,35 @@ export function DigitRoller({ onBack }: DigitRollerProps) {
             }`}
           >
             <div className="flex h-full items-center justify-center">
-              <span
-                className={`text-9xl font-bold text-[var(--color-text-primary)] sm:text-9xl transition-all font-display ${
-                  rolling ? "blur-sm opacity-70" : "blur-none opacity-100"
-                }`}
-              >
-                {currentDigit}
-              </span>
+              {!hasRolled ? (
+                <span className="text-4xl font-medium text-[var(--color-text-secondary)] animate-pulse">
+                  Click Roll to start
+                </span>
+              ) : (
+                <span
+                  className={`text-9xl font-bold bg-gradient-to-br from-blue-500 via-cyan-500 to-teal-500 bg-clip-text text-transparent sm:text-9xl transition-all font-display ${
+                    rolling ? "blur-sm opacity-70" : "blur-none opacity-100"
+                  }`}
+                >
+                  {currentDigit}
+                </span>
+              )}
             </div>
           </div>
         </div>
 
+        {completed && hasRolled && (
+          <div className="rounded-lg border border-[var(--color-accent)]/50 bg-[var(--color-accent)]/10 px-4 py-3 text-center">
+            <p className="text-sm font-medium text-[var(--color-accent)]">
+              🎉 You've completed all digits! Starting over...
+            </p>
+          </div>
+        )}
+
         <div className="flex gap-4">
           <button
             type="button"
-            onClick={onBack}
+            onClick={handleBack}
             className="h-14 flex-1 rounded-2xl border-2 border-[var(--color-border)] bg-[var(--color-surface)] text-lg font-semibold text-[var(--color-text-secondary)] transition hover:bg-[var(--color-surface-hover)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
           >
             ← Back
@@ -151,7 +211,7 @@ export function DigitRoller({ onBack }: DigitRollerProps) {
             disabled={rolling}
             className="h-14 flex-[2] rounded-2xl bg-gradient-to-r from-amber-500 to-orange-600 text-lg font-semibold text-zinc-950 shadow-lg shadow-amber-900/30 transition hover:from-amber-400 hover:to-orange-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300 disabled:cursor-not-allowed disabled:opacity-50 font-display"
           >
-            {rolling ? "Rolling…" : "Roll again"}
+            {rolling ? "Rolling…" : !hasRolled ? "Roll" : completed ? "Start over" : "Roll again"}
           </button>
         </div>
       </div>
