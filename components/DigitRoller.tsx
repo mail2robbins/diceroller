@@ -16,7 +16,7 @@ export function DigitRoller({ onBack, soundEnabled = true }: DigitRollerProps) {
   const [rolling, setRolling] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [remainingDigits, setRemainingDigits] = useState<number[]>(() =>
-    Array.from({ length: 10 }, (_, i) => i + 1),
+    Array.from({ length: 25 }, (_, i) => i + 1),
   );
   const [completed, setCompleted] = useState(false);
   const [hasRolled, setHasRolled] = useState(false);
@@ -170,7 +170,7 @@ export function DigitRoller({ onBack, soundEnabled = true }: DigitRollerProps) {
             className={`relative aspect-square w-full max-w-[20rem] rounded-2xl border-2 border-[var(--color-border)] bg-[var(--gradient-surface)] shadow-2xl shadow-black/50 transition-transform ${rolling ? "scale-95" : "scale-100"
               }`}
           >
-            <div className="flex h-full items-center justify-center p-2">
+            <div className="flex h-full items-center justify-center p-8">
               {!hasRolled ? (
                 <span className="text-6xl sm:text-7xl font-light text-center text-[var(--color-text-secondary)] animate-pulse">
                   -
@@ -178,10 +178,10 @@ export function DigitRoller({ onBack, soundEnabled = true }: DigitRollerProps) {
               ) : (
                 <span
                   className={`inline-block px-8 py-6 font-bold bg-gradient-to-br from-yellow-500 via-green-400 to-blue-500 bg-clip-text text-transparent leading-none transition-all font-display select-none ${max >= 1000
-                    ? "text-9xl sm:text-8xl"
+                    ? "text-[8rem] sm:text-[10rem]"
                     : max >= 100
-                      ? "text-9xl"
-                      : "text-9xl"
+                      ? "text-[10rem] sm:text-[12rem]"
+                      : "text-[12rem] sm:text-[14rem]"
                     } ${rolling ? "blur-sm opacity-70" : "blur-none opacity-100"
                     }`}
                 >

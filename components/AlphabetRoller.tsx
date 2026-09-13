@@ -99,7 +99,7 @@ export function AlphabetRoller({ onBack, soundEnabled = true }: AlphabetRollerPr
             className={`relative aspect-square w-full max-w-[20rem] rounded-2xl border-2 border-[var(--color-border)] bg-[var(--gradient-surface)] shadow-2xl shadow-black/50 transition-transform ${rolling ? "scale-95" : "scale-100"
               }`}
           >
-            <div className="flex h-full items-center justify-center p-2">
+            <div className="flex h-full items-center justify-center p-8">
               {!hasRolled ? (
                 <span className="text-6xl sm:text-7xl font-light text-center text-[var(--color-text-secondary)] animate-pulse">
                   -
