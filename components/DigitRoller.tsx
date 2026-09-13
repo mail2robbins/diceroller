@@ -10,7 +10,7 @@ type DigitRollerProps = {
 };
 
 export function DigitRoller({ onBack, soundEnabled = true }: DigitRollerProps) {
-  const [max, setMax] = useState(10);
+  const [max, setMax] = useState(25);
   const [currentDigit, setCurrentDigit] = useState<number>(0);
   const [targetDigit, setTargetDigit] = useState<number>(0);
   const [rolling, setRolling] = useState(false);
